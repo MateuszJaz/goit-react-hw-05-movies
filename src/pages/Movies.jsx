@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { fetchMoviesWithQuery } from 'api/tmdb';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import propTypes from 'prop-types';
 
 const Movies = () => {
   const [searchResults, setSearchResult] = useState(null);
@@ -55,3 +56,13 @@ const Movies = () => {
 };
 
 export default Movies;
+
+Movies.propTypes = {
+  searchResults: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.string,
+      title: propTypes.string,
+      name: propTypes.string,
+    })
+  ),
+};

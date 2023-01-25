@@ -1,15 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchTrendingToday } from 'api/tmdb';
+import propTypes from 'prop-types';
 
 const Home = () => {
   const [trendingToday, setTrendingToday] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
-    fetchTrendingToday()
-      .then(response => setTrendingToday(response.data.results))
-      .catch(error => console.log(error));
+    fetchTrendingToday().then(response =>
+      setTrendingToday(response.data.results)
+    );
   }, []);
 
   return (
@@ -33,3 +34,13 @@ const Home = () => {
 };
 
 export default Home;
+
+Home.propTypes = {
+  trendingToday: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.string,
+      title: propTypes.string,
+      name: propTypes.string,
+    })
+  ),
+};

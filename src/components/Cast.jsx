@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieCredits } from 'api/tmdb';
+import propTypes from 'prop-types';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -23,7 +24,7 @@ const Cast = () => {
                 src={
                   profile_path
                     ? `https://image.tmdb.org/t/p/w200/${profile_path}`
-                    : `https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg`
+                    : `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/100px-Placeholder_no_text.svg.png`
                 }
                 width={100}
                 alt={name}
@@ -41,3 +42,14 @@ const Cast = () => {
 };
 
 export default Cast;
+
+Cast.propTypes = {
+  movieCredits: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.string,
+      name: propTypes.string,
+      character: propTypes.string,
+      profile_path: propTypes.string,
+    })
+  ),
+};

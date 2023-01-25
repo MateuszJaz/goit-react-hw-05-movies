@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieReviews } from 'api/tmdb';
+import propTypes from 'prop-types';
 
 const Reviews = () => {
   const { movieId } = useParams();
@@ -25,10 +26,20 @@ const Reviews = () => {
           ))}
         </ul>
       ) : (
-        (error && <p>{error}</p>) || <p>No reviews</p>
+        (error && <p>{error}</p>) || <p>No reviews yet</p>
       )}
     </>
   );
 };
 
 export default Reviews;
+
+Reviews.propTypes = {
+  movieReviews: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.string,
+      author: propTypes.string,
+      content: propTypes.string,
+    })
+  ),
+};

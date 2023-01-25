@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieDetails } from 'api/tmdb';
+import propTypes from 'prop-types';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -27,11 +28,18 @@ const MovieDetails = () => {
     <>
       {movieDetails && !error ? (
         <>
-          <NavLink to={backHref} /*className={styles.link*/>← Go back</NavLink>
+          <NavLink to={backHref} /*className={styles.link*/>
+            <button>← Go back</button>
+          </NavLink>
           <main>
             <img
-              src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
+              src={
+                poster_path
+                  ? `https://image.tmdb.org/t/p/w400/${poster_path}`
+                  : `https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg`
+              }
               alt={`${title} movie poster`}
+              width={250}
             />
             <div>
               <h2>
@@ -41,7 +49,7 @@ const MovieDetails = () => {
               <h3>Overview:</h3>
               <p>{overview}</p>
               <h4>Genres</h4>
-              <p>{genres && genres.map(({ name }) => ` ${name},`)}</p>
+              <p>{genres && genres.map(({ name }) => ` ${name}`)}</p>
             </div>
           </main>
           <hr />
@@ -73,3 +81,16 @@ const MovieDetails = () => {
 };
 
 export default MovieDetails;
+
+MovieDetails.propTypes = {
+  movieDetails: propTypes.arrayOf(
+    propTypes.shape({
+      title: propTypes.string,
+      vote_average: propTypes.string,
+      overview: propTypes.string,
+      genres: propTypes.arrayOf(propTypes.shape({ name: propTypes.string })),
+      poster_path: propTypes.string,
+      release_date: propTypes.string,
+    })
+  ),
+};
