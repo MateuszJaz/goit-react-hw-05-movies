@@ -9,6 +9,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieDetails } from 'api/tmdb';
 import propTypes from 'prop-types';
 import Loader from 'components/Loader';
+import style from '../pages/MovieDetails.module.css';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -31,20 +32,20 @@ const MovieDetails = () => {
     <>
       {movieDetails && !error ? (
         <>
-          <NavLink to={backHref} /*className={styles.link*/>
+          <NavLink to={backHref}>
             <button>← Go back</button>
           </NavLink>
-          <main>
+          <main className={style.mainSection}>
             <img
               src={
                 poster_path
-                  ? `https://image.tmdb.org/t/p/w400/${poster_path}`
+                  ? `https://image.tmdb.org/t/p/w300/${poster_path}`
                   : `https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg`
               }
               alt={`${title} movie poster`}
-              width={250}
+              width={200}
             />
-            <div>
+            <div className={style.movieInfo}>
               <h2>
                 {title} {`(${release_date.slice(0, 4)})`}
               </h2>
