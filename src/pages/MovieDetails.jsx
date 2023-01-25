@@ -1,4 +1,10 @@
-import { useParams, Link, Outlet } from 'react-router-dom';
+import {
+  useParams,
+  Link,
+  NavLink,
+  useLocation,
+  Outlet,
+} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieDetails } from 'api/tmdb';
 
@@ -7,6 +13,8 @@ const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState('');
   const [error, setError] = useState(null);
 
+  const location = useLocation();
+  const backHref = location.state?.from ?? '/movies';
   useEffect(() => {
     fetchMovieDetails(movieId)
       .then(response => setMovieDetails(response.data))
@@ -17,9 +25,9 @@ const MovieDetails = () => {
     movieDetails;
   return (
     <>
-      {console.log(movieDetails)}
       {movieDetails && !error ? (
         <>
+          <NavLink to={backHref} /*className={styles.link*/>← Go back</NavLink>
           <main>
             <img
               src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
@@ -33,7 +41,7 @@ const MovieDetails = () => {
               <h3>Overview:</h3>
               <p>{overview}</p>
               <h4>Genres</h4>
-              <p>{genres && genres.map(({ name }) => ` ${name}`)}</p>
+              <p>{genres && genres.map(({ name }) => ` ${name},`)}</p>
             </div>
           </main>
           <hr />
@@ -42,10 +50,14 @@ const MovieDetails = () => {
 
             <ul>
               <li>
-                <Link to={`/movies/${movieId}/cast`}>Cast</Link>
+                <Link to={`/movies/${movieId}/cast`} state={location.state}>
+                  Cast
+                </Link>
               </li>
               <li>
-                <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+                <Link to={`/movies/${movieId}/reviews`} state={location.state}>
+                  Reviews
+                </Link>
               </li>
             </ul>
             <hr />

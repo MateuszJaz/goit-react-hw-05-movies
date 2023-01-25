@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { fetchMoviesWithQuery } from 'api/tmdb';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
 const Movies = () => {
-  const [query, setQuery] = useState(null);
   const [searchResults, setSearchResult] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') ?? '';
 
   useEffect(() => {
     query &&
@@ -16,7 +17,7 @@ const Movies = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setQuery(e.target.search.value);
+    setSearchParams({ query: e.target.search.value });
     e.target.reset();
   };
 
@@ -39,7 +40,9 @@ const Movies = () => {
           {searchResults.map(({ id, title, name }) => {
             return (
               <li key={id}>
-                <Link to={`${id}`}>{title || name}</Link>
+                <Link to={`${id}`} state={{ from: `/movies?query=${query}` }}>
+                  {title || name}
+                </Link>
               </li>
             );
           })}

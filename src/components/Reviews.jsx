@@ -15,7 +15,6 @@ const Reviews = () => {
 
   return (
     <>
-      {console.log(movieReviews)}
       {movieReviews.length ? (
         <ul>
           {movieReviews.map(({ id, author, content }) => (

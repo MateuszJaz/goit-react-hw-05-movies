@@ -15,18 +15,21 @@ const Cast = () => {
 
   return (
     <>
-      {console.log(movieCredits.cast)}
       {movieCredits && !error ? (
         <ul>
           {movieCredits.map(({ id, name, character, profile_path }) => (
             <li key={id}>
-              <h3>{character}</h3>
-              <p>{name}</p>
               <img
-                src={`https://image.tmdb.org/t/p/w200/${profile_path}`}
+                src={
+                  profile_path
+                    ? `https://image.tmdb.org/t/p/w200/${profile_path}`
+                    : `https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg`
+                }
                 width={100}
                 alt={name}
               />
+              <h4>{name}</h4>
+              <p>as: {character}</p>
             </li>
           ))}
         </ul>
