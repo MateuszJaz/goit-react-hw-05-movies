@@ -5,9 +5,10 @@ import {
   useLocation,
   Outlet,
 } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieDetails } from 'api/tmdb';
 import propTypes from 'prop-types';
+import Loader from 'components/Loader';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -16,6 +17,7 @@ const MovieDetails = () => {
 
   const location = useLocation();
   const backHref = location.state?.from ?? '/movies';
+
   useEffect(() => {
     fetchMovieDetails(movieId)
       .then(response => setMovieDetails(response.data))
@@ -24,6 +26,7 @@ const MovieDetails = () => {
 
   const { title, vote_average, overview, genres, poster_path, release_date } =
     movieDetails;
+
   return (
     <>
       {movieDetails && !error ? (
@@ -69,8 +72,9 @@ const MovieDetails = () => {
               </li>
             </ul>
             <hr />
-
-            <Outlet />
+            <Suspense fallback={<Loader />}>
+              <Outlet />
+            </Suspense>
           </aside>
         </>
       ) : (
