@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import SharedLayout from './SharedLayout';
 import Loader from './Loader';
 
@@ -22,7 +22,7 @@ const App = () => {
               <Route path="/movies/:movieId/reviews" element={<Reviews />} />
             </Route>
           </Route>
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>
     </>
