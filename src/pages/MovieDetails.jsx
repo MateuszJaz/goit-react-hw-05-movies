@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieDetails } from 'api/tmdb';
-import propTypes from 'prop-types';
 import Loader from 'components/Loader';
 import style from '../pages/MovieDetails.module.css';
 
@@ -86,16 +85,3 @@ const MovieDetails = () => {
 };
 
 export default MovieDetails;
-
-MovieDetails.propTypes = {
-  movieDetails: propTypes.arrayOf(
-    propTypes.shape({
-      title: propTypes.string,
-      vote_average: propTypes.string,
-      overview: propTypes.string,
-      genres: propTypes.arrayOf(propTypes.shape({ name: propTypes.string })),
-      poster_path: propTypes.string,
-      release_date: propTypes.string,
-    })
-  ),
-};

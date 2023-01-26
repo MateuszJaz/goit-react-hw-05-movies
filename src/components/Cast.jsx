@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieCredits } from 'api/tmdb';
-import propTypes from 'prop-types';
 import style from '../components/Cast.module.css';
 
 const Cast = () => {
@@ -44,14 +43,3 @@ const Cast = () => {
 };
 
 export default Cast;
-
-Cast.propTypes = {
-  movieCredits: propTypes.arrayOf(
-    propTypes.shape({
-      id: propTypes.string,
-      name: propTypes.string,
-      character: propTypes.string,
-      profile_path: propTypes.string,
-    })
-  ),
-};
